@@ -60,7 +60,7 @@ const updateWorkout = async (req, res) => {
   if (!workout) {
     return res.status(404).json({ error: "No Such Workout" });
   }
-  res.status(200).send({ success: true, workout });
+  res.status(200).send({ successs: true, workout });
 };
 
 module.exports = {
