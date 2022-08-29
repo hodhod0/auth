@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 
 //  to get singl workout
 router.get("/:id", (req, res) => {
-  res.send("its good");
+  res.send("its good by id");
 });
 
 //  to post  a new workout
@@ -24,7 +24,6 @@ router.post("/", async (req, res) => {
     res.status(400).json({error: error.message})
 
   }
-  res.send("its good");
 });
 
 //  to get edit a workout
