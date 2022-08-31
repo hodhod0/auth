@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // get all workouts
 const getWorkouts = async (req, res) => {
   const workouts = await Workout.find({}).sort({ createdAt: -1 });
-  res.status(200).send({ success: true, workouts });
+  res.status(200).json(workouts);
 };
 
 // get single workout
@@ -19,7 +19,7 @@ const getWorkout = async (req, res) => {
     return res.status(404).json({ error: "No Such Workout" });
   }
 
-  res.status(200).send({ success: true, workout });
+  res.status(200).json(workout);
 };
 
 // create a new workout
@@ -28,7 +28,7 @@ const createWorkout = async (req, res) => {
 
   try {
     const workout = await Workout.create({ title, reps, load });
-    res.status(200).send({ success: true, workout });
+    res.status(200).json(workout);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -44,7 +44,7 @@ const deleteWorkout = async (req, res) => {
   if (!workout) {
     return res.status(404).json({ error: "No Such Workout" });
   }
-  res.status(200).send({ success: true, workout });
+  res.status(200).json(workout);
 };
 
 // update a workout
@@ -60,7 +60,7 @@ const updateWorkout = async (req, res) => {
   if (!workout) {
     return res.status(404).json({ error: "No Such Workout" });
   }
-  res.status(200).send({ successs: true, workout });
+  res.status(200).json(workout);
 };
 
 module.exports = {
