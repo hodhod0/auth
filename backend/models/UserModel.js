@@ -1,43 +1,72 @@
-const mongoose = require("mongoose")
-const bcrypt = require("bcrypt")
-const validator = require("validator")
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const Schema = mongoose.Schema
+const validator = require("validator");
+
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    email:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    password:{
-        type:String,
-        required:true,
-    },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
 
-})
+// static singup method
+userSchema.statics.singup = async function (email, passowrd) {
+  // validator
+  if (!email || !passowrd) {
+    throw Error("all the fields ");
+  }
 
-// static singup
-userSchema.statics.singup = async function(email,passowrd){
-    //validator
-    if(!email|| !passowrd){
-        throw Error ("all the fields ")
-    }
-    if(!validator.isEmail(email)){
-        throw Error ("Email is not valid")
-    }
-    if(!validator.isStrongPassword(passowrd)){
-        throw Error ("password not strong enough")
-    }
-    const exists = await this.findOne({email})
+  if (!validator.isEmail(email)) {
+    throw Error("Email is not valid");
+  }
+  if (!validator.isStrongPassword(passowrd)) {
+    throw Error("password not strong enough");
+  }
 
-    if(exists){
-        throw Error("Email already in use")
-    }
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(passowrd, salt)
-    const user = await this.create({email, password:hash})
-    return user
-}
+  const exists = await this.findOne({ email });
 
-module.exports = mongoose.model("User",userSchema)
+  if (exists) {
+    throw Error("Email already in use");
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(passowrd, salt);
+
+  const user = await this.create({ email, password: hash });
+
+  return user;
+};
+
+// static login method
+
+userSchema.statics.login = async function(email, passowrd) {
+
+  // validator
+
+  if (!email || !passowrd) {
+    throw Error("all the fields ");
+  }
+
+  const user = await this.findOne({ email });
+
+  if (!user) {
+    throw Error(" Incorecet  Email");
+  }
+  const match = await bcrypt.compare(passowrd, user.passowrd);
+
+  if (!match) {
+    throw Error(" Incorecet  Passowrd");
+  }
+
+  return user;
+};
+
+module.exports = mongoose.model("User", userSchema);

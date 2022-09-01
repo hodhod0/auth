@@ -61,14 +61,14 @@ header a {
 }
 
 .workout-details span {
-  position: absolute;
+  position: static;
   top: 20px;
   right: 20px;
   cursor: pointer;
-  background: #f1f1f1;
+  background: var(--primary);
   padding: 6px;
-  border-radius: 50px;
-  color: #333;
+  border-radius: 10px;
+  color: white;
 }
 
 label,
