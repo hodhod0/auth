@@ -45,28 +45,25 @@ userSchema.statics.singup = async function (email, passowrd) {
   return user;
 };
 
+
 // static login method
+userSchema.statics.login = async function(email, password) {
 
-userSchema.statics.login = async function(email, passowrd) {
-
-  // validator
-
-  if (!email || !passowrd) {
-    throw Error("all the fields ");
+  if (!email || !password) {
+    throw Error('All fields must be filled')
   }
 
-  const user = await this.findOne({ email });
-
+  const user = await this.findOne({ email })
   if (!user) {
-    throw Error(" Incorecet  Email");
+    throw Error('Incorrect email')
   }
-  const match = await bcrypt.compare(passowrd, user.passowrd);
 
+  const match = await bcrypt.compare(password, user.password)
   if (!match) {
-    throw Error(" Incorecet  Passowrd");
+    throw Error('Incorrect password')
   }
 
-  return user;
-};
+  return user
+}
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema)

@@ -5,6 +5,7 @@ const { loginUser, singupUser } = require("../controllers/UserController");
 
 //logIN
 router.post("/login", loginUser);
+
 //SingUp
 router.post("/singup", singupUser);
 
