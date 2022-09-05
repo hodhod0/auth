@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
 const validator = require("validator");
 
 const Schema = mongoose.Schema;
+
+
+
 
 const userSchema = new Schema({
   email: {
@@ -21,7 +23,7 @@ const userSchema = new Schema({
 userSchema.statics.singup = async function (email, passowrd) {
   // validator
   if (!email || !passowrd) {
-    throw Error("all the fields ");
+    throw Error("all the fields must be filled");
   }
 
   if (!validator.isEmail(email)) {
@@ -42,7 +44,7 @@ userSchema.statics.singup = async function (email, passowrd) {
 
   const user = await this.create({ email, password: hash });
 
-  return user;
+  return user
 };
 
 
