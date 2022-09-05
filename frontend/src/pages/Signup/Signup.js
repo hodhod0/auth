@@ -11,6 +11,9 @@ export const Signup = () => {
 
     // console.log(email, password);
     await signup(email, password);
+    // setEmail('')
+    // setPassword('')
+
   };
   return (
     <form className="signup" on onSubmit={handelSubmit}>

@@ -6,12 +6,12 @@ export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
-        users: action.payload,
+        user: action.payload,
       };
 
     case "LOGOUT":
       return {
-        users: null,
+        user: null,
       };
 
     default:
